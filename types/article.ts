@@ -1,6 +1,7 @@
 import { ArticleMSG } from "../messages/article";
 import { TypedResult } from "@/core/types/Result";
 import { IResultType } from "@/core/types/general";
+import { Response } from "express";
 
 // article types --------------------------------------------------------
 export enum EArticleStates {
@@ -47,3 +48,13 @@ export interface IArticleResult extends IResultType {
 }
 
 export const ArticleResult = new TypedResult<IArticleResult, IArticle, ArticleMSG>()
+
+// article response types ------------------------------------------------------
+export interface IArticleResponse extends IArticleResult {
+}
+
+export const ArticleResponse = (res: Response, result: IResultType) => {
+    const resp: IArticleResponse = result as IArticleResponse
+
+    return res.status(resp.status).json(resp)
+}
