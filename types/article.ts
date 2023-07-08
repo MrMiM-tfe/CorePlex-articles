@@ -1,4 +1,4 @@
-import { ArticleMSG, EArticleMSG } from "../messages/article";
+import { ArticleMSG } from "../messages/article";
 import { TypedResult } from "@/core/types/Result";
 import { IResultType } from "@/core/types/general";
 
@@ -6,6 +6,17 @@ import { IResultType } from "@/core/types/general";
 export enum EArticleStates {
     PUBLISHED = "published",
     DRAFT = "draft",
+}
+
+export enum ESortingOptions {
+    PRICE_HIGH_TO_LOW = '-price',
+    PRICE_LOW_TO_HIGH = 'price',
+    NEWEST_FIRST = '-createdAt',
+    OLDEST_FIRST = 'createdAt',
+    RATINGS_HIGH_TO_LOW = '-ratingsAverage',
+    RATINGS_LOW_TO_HIGH = 'ratingsAverage',
+    NAME_A_TO_Z = 'name',
+    NAME_Z_TO_A = '-name',
 }
 
 export interface IPreArticle {
@@ -31,7 +42,7 @@ export interface IOptArticle extends Partial<IArticle> {}
 
 // article result types --------------------------------------------------------
 export interface IArticleResult extends IResultType {
-    data?: IArticle;
+    data?: IArticle | IArticle[];
     message?:ArticleMSG
 }
 
