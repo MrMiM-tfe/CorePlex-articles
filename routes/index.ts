@@ -1,11 +1,22 @@
 import {Router} from "express";
 const router = Router()
 
-
-import { sellerCheck } from "@/core/middlewares/auth";
+// middlewares
+import { protect, sellerCheck } from "@/core/middlewares/auth";
 
 import * as main from "../controllers/main";
 import * as category from "../controllers/category";
+import * as comment from "../controllers/comment";
+
+// comment routes --------------------------------------------------
+router.get("/comment/article/:slug", comment.singleArticle)
+router.get("/comment/:id", comment.singleComment)
+// comment authenticated routes
+router.post("/comment", protect, comment.create) // authenticated
+router.put("/comment/:id", protect, comment.edit) // authenticated
+router.delete("/comment/:id", protect, comment.del) // authenticated
+// comment seller perm routes
+router.get("/comment", sellerCheck, comment.index) // seller perm
 
 // category routes --------------------------------------------------
 router.get("/category", category.index)
